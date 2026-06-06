@@ -29,16 +29,15 @@
 
   const pairingScript = document.getElementById('addon-pairings');
   const serviceSelect = document.querySelector('[data-service-select]');
-  const addonStep = document.querySelector('[data-addon-step]');
+  const addonPanel = document.querySelector('[data-addon-panel]');
+  const addonPlaceholder = document.querySelector('[data-addon-placeholder]');
   const addonOptions = document.querySelector('[data-addon-options]');
   const addonTitle = document.querySelector('[data-addon-title]');
   const addonHint = document.querySelector('[data-addon-hint]');
   const addonsInput = document.querySelector('[data-addons-input]');
-  const bookingDetails = document.querySelector('[data-booking-details]');
-  const skipButton = document.querySelector('[data-addon-skip]');
-  const continueButton = document.querySelector('[data-addon-continue]');
+  const bookingForm = document.querySelector('[data-booking-form]');
 
-  if (!pairingScript || !(serviceSelect instanceof HTMLSelectElement) || !addonStep || !addonOptions || !bookingDetails) {
+  if (!pairingScript || !(serviceSelect instanceof HTMLSelectElement) || !addonPanel || !addonOptions) {
     return;
   }
 
@@ -73,29 +72,23 @@
     addonsInput.value = selected.length ? formatAddonValue(selected) : 'No add-ons selected';
   };
 
-  const showBookingDetails = () => {
-    syncAddonsInput();
-    addonStep.hidden = true;
-    bookingDetails.hidden = false;
-    bookingDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  };
-
-  const renderAddonStep = (slug) => {
+  const renderAddonPanel = (slug) => {
     const pairing = pairings[slug];
-
     addonOptions.innerHTML = '';
-    bookingDetails.hidden = true;
 
     if (!pairing || !pairing.items?.length) {
-      addonStep.hidden = true;
+      addonPanel.hidden = true;
+      addonPanel.classList.remove('is-visible');
+      if (addonPlaceholder) addonPlaceholder.hidden = false;
       if (addonsInput instanceof HTMLInputElement) {
         addonsInput.value = 'No add-ons available';
       }
-      bookingDetails.hidden = false;
       return;
     }
 
-    addonStep.hidden = false;
+    if (addonPlaceholder) addonPlaceholder.hidden = true;
+    addonPanel.hidden = false;
+    requestAnimationFrame(() => addonPanel.classList.add('is-visible'));
 
     if (addonTitle) {
       addonTitle.textContent = `A few extras that pair well with ${pairing.serviceName}`;
@@ -120,49 +113,52 @@
       checkbox.type = 'checkbox';
       checkbox.name = 'addon_choice';
       checkbox.value = item.slug;
+      checkbox.addEventListener('change', syncAddonsInput);
 
       const copy = document.createElement('span');
       copy.className = 'addon-option-copy';
-      copy.innerHTML = `<strong>${item.name}</strong><span class="addon-option-meta">${item.priceLabel} · ${item.durationLabel}</span><span class="addon-option-summary">${item.summary}</span>`;
 
+      const name = document.createElement('strong');
+      name.textContent = item.name;
+
+      const meta = document.createElement('span');
+      meta.className = 'addon-option-meta';
+      meta.textContent = `${item.priceLabel} · ${item.durationLabel}`;
+
+      const summary = document.createElement('span');
+      summary.className = 'addon-option-summary';
+      summary.textContent = item.summary;
+
+      copy.append(name, meta, summary);
       label.append(checkbox, copy);
       addonOptions.append(label);
     });
 
-    if (addonsInput instanceof HTMLInputElement) {
-      addonsInput.value = 'No add-ons selected';
-    }
+    syncAddonsInput();
   };
 
   const handleServiceChange = () => {
     const selectedOption = serviceSelect.selectedOptions[0];
     const slug = selectedOption?.dataset.slug;
 
+    addonPanel.classList.remove('is-visible');
+
     if (!slug || !serviceSelect.value) {
-      addonStep.hidden = true;
-      bookingDetails.hidden = true;
+      addonPanel.hidden = true;
+      if (addonPlaceholder) addonPlaceholder.hidden = false;
       if (addonsInput instanceof HTMLInputElement) {
         addonsInput.value = '';
       }
       return;
     }
 
-    renderAddonStep(slug);
+    renderAddonPanel(slug);
   };
 
   serviceSelect.addEventListener('change', handleServiceChange);
 
-  if (skipButton) {
-    skipButton.addEventListener('click', () => {
-      addonOptions.querySelectorAll('input[type="checkbox"]').forEach((input) => {
-        input.checked = false;
-      });
-      showBookingDetails();
-    });
-  }
-
-  if (continueButton) {
-    continueButton.addEventListener('click', showBookingDetails);
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', syncAddonsInput);
   }
 
   if (serviceSelect.value) {

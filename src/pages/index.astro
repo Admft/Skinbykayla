@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingCopy from '../components/BookingCopy.astro';
 import BookingForm from '../components/BookingForm.astro';
 import FAQ from '../components/FAQ.astro';
 import ReviewMarquee from '../components/ReviewMarquee.astro';
@@ -111,18 +112,9 @@ const schema = [
 
   <ReviewMarquee />
 
-  <section class="booking-section section-pad-small" id="book" aria-labelledby="book-title">
+  <section class="booking-section section-pad-small" id="book" aria-label="Reserve your appointment">
     <div class="container booking-grid">
-      <div class="booking-copy">
-        <h2 id="book-title">Book your appointment request.</h2>
-        <p>
-          Pick a service, choose any optional add-ons that feel right, then share your preferred day and time. Kaylaa will confirm the appointment by text or email.
-        </p>
-        <div class="contact-card">
-          <p>Prefer a quick text?</p>
-          <a href={`sms:${business.phoneE164}`}>Text {business.phoneDisplay}</a>
-        </div>
-      </div>
+      <BookingCopy />
       <BookingForm />
     </div>
   </section>

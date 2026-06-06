@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingCopy from '../components/BookingCopy.astro';
 import BookingForm from '../components/BookingForm.astro';
 import ServiceMenu from '../components/ServiceMenu.astro';
-import { addOnIntro } from '../data/addons';
 import { breadcrumbSchema, business, localBusinessSchema, websiteSchema } from '../data/business';
 
 const schema = [
@@ -25,7 +25,7 @@ const schema = [
       <div>
         <div class="location-stamp">Request an appointment</div>
         <h1>Book SkinByKaylaa</h1>
-        <p>Choose your service, add any optional extras that feel right, then share your preferred day and time. Kaylaa will confirm by text or email.</p>
+        <p>Reserve your time with Kaylaa. Every appointment is private, gentle, and confirmed personally.</p>
       </div>
       <a class="button button-secondary" href={`sms:${business.phoneE164}`}>Text instead</a>
     </div>
@@ -33,16 +33,7 @@ const schema = [
 
   <section class="booking-section section-pad-small">
     <div class="container booking-grid">
-      <div class="booking-copy">
-        <h2>The calmer booking flow.</h2>
-        <p>This form keeps the experience on the SkinByKaylaa website while still giving Kaylaa control of confirmed appointment times.</p>
-        <p>{addOnIntro}</p>
-        <a class="text-link" href="/add-ons/">Browse all optional add-ons</a>
-        <div class="contact-card">
-          <p>Studio address</p>
-          <a href={business.mapsLink} target="_blank" rel="noopener">{business.address.street}, {business.address.city}, {business.address.region}</a>
-        </div>
-      </div>
+      <BookingCopy />
       <BookingForm />
     </div>
   </section>

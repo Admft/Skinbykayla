@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookingCopy from '../../components/BookingCopy.astro';
 import BookingForm from '../../components/BookingForm.astro';
 import ServiceMenu from '../../components/ServiceMenu.astro';
 import {
@@ -109,10 +110,7 @@ const schema = [
 
   <section class="booking-section section-pad-small" id="book">
     <div class="container booking-grid">
-      <div class="booking-copy">
-        <h2>Request {service.name}.</h2>
-        <p>Choose your service, add any optional extras that feel right, then send your preferred day and time. Kaylaa will confirm by text or email.</p>
-      </div>
+      <BookingCopy />
       <BookingForm preselectedSlug={service.slug} />
     </div>
   </section>

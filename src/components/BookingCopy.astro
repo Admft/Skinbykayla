@@ -1,0 +1,22 @@
+---
+import { business } from '../data/business';
+---
+<div class="booking-copy">
+  <h2>Reserve your time with Kaylaa.</h2>
+  <p>
+    Choose your service, add any little comforts that feel right, and share your preferred day and time. Kaylaa will personally confirm your visit by text or email.
+  </p>
+  <p class="booking-reassurance">
+    Every appointment is private, gentle, and taken at your pace.
+  </p>
+  <p class="booking-rating">
+    <a href="/reviews/">Loved by clients on Google</a>
+  </p>
+  <div class="contact-card trust-card">
+    <p>Prefer to ask first?</p>
+    <a href={`sms:${business.phoneE164}`}>Text Kaylaa at {business.phoneDisplay}</a>
+    <p class="trust-card-note">
+      Perfect for first-time wax clients, skin questions, or help choosing a service.
+    </p>
+  </div>
+</div>
