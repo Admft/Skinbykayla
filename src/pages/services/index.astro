@@ -6,8 +6,6 @@ import {
   breadcrumbSchema,
   business,
   localBusinessSchema,
-  serviceCategories,
-  servicesByCategory,
   websiteSchema
 } from '../../data/business';
 
@@ -37,24 +35,9 @@ const schema = [
     </div>
   </section>
 
-  <section class="section-pad-small">
+  <section class="section-pad-small" aria-label="Service menu">
     <div class="container">
       <ServiceMenu />
-    </div>
-  </section>
-
-  <section class="service-detail-cloud section-pad-small" aria-label="Service categories">
-    <div class="container category-grid">
-      {serviceCategories.map((category) => (
-        <article>
-          <h2>{category}</h2>
-          <ul>
-            {servicesByCategory(category).map((service) => (
-              <li><a href={`/services/${service.slug}/`}>{service.name}</a></li>
-            ))}
-          </ul>
-        </article>
-      ))}
     </div>
   </section>
 
