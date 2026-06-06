@@ -1,29 +1,73 @@
 ---
 import { formatDuration, formatMoney, serviceCategories, servicesByCategory } from '../data/business';
+import type { Service } from '../data/business';
 
 interface Props {
   compact?: boolean;
 }
+
 const { compact = false } = Astro.props;
+const visibleCount = 5;
+
+function splitServices(services: Service[]) {
+  if (services.length <= visibleCount) {
+    return { visible: services, hidden: [] as Service[] };
+  }
+
+  return {
+    visible: services.slice(0, visibleCount),
+    hidden: services.slice(visibleCount)
+  };
+}
 ---
 <div class={compact ? 'service-ledger service-ledger-compact' : 'service-ledger'}>
-  {serviceCategories.map((category) => (
-    <section class="ledger-group" aria-labelledby={`group-${category.toLowerCase()}`}>
-      <h3 id={`group-${category.toLowerCase()}`}>{category}</h3>
-      <div class="ledger-lines">
-        {servicesByCategory(category).map((service) => (
-          <a class="ledger-line" href={`/services/${service.slug}/`}>
-            <span>
-              <strong>{service.name}</strong>
-              {!compact && <em>{service.summary}</em>}
-            </span>
-            <span class="ledger-meta">
-              <b>{formatMoney(service.price)}</b>
-              <small>{formatDuration(service.durationMinutes)}</small>
-            </span>
-          </a>
-        ))}
-      </div>
-    </section>
-  ))}
+  {serviceCategories.map((category) => {
+    const services = servicesByCategory(category);
+    const { visible, hidden } = splitServices(services);
+    const groupId = `group-${category.toLowerCase()}`;
+
+    return (
+      <section class="ledger-group" aria-labelledby={groupId}>
+        <h3 id={groupId}>
+          {category}
+          <span class="ledger-count">{services.length}</span>
+        </h3>
+        <div class="ledger-lines">
+          {visible.map((service) => (
+            <a class="ledger-line" href={`/services/${service.slug}/`}>
+              <span>
+                <strong>{service.name}</strong>
+                {!compact && <em>{service.summary}</em>}
+              </span>
+              <span class="ledger-meta">
+                <b>{formatMoney(service.price)}</b>
+                <small>{formatDuration(service.durationMinutes)}</small>
+              </span>
+            </a>
+          ))}
+        </div>
+        {hidden.length > 0 && (
+          <details class="ledger-expand">
+            <summary>
+              Show {hidden.length} more {category.toLowerCase()} services
+            </summary>
+            <div class="ledger-lines ledger-lines-more">
+              {hidden.map((service) => (
+                <a class="ledger-line" href={`/services/${service.slug}/`}>
+                  <span>
+                    <strong>{service.name}</strong>
+                    {!compact && <em>{service.summary}</em>}
+                  </span>
+                  <span class="ledger-meta">
+                    <b>{formatMoney(service.price)}</b>
+                    <small>{formatDuration(service.durationMinutes)}</small>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </details>
+        )}
+      </section>
+    );
+  })}
 </div>

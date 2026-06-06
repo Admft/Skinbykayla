@@ -119,11 +119,11 @@ a:hover {
 }
 
 .section-pad {
-  padding-block: clamp(76px, 9vw, 136px);
+  padding-block: clamp(48px, 6vw, 72px);
 }
 
 .section-pad-small {
-  padding-block: clamp(52px, 7vw, 92px);
+  padding-block: clamp(32px, 4vw, 52px);
 }
 
 h1,
@@ -521,18 +521,39 @@ p + p {
   font-size: 1.14rem;
 }
 
+.intro-grid h2,
+.split-heading h2,
+.booking-copy h2,
+.visit-grid h2,
+.faq-section h2 {
+  font-size: clamp(1.7rem, 2.8vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.intro-grid h2,
+.split-heading h2,
+.booking-copy h2,
+.visit-grid h2 {
+  max-width: 14ch;
+}
+
+.faq-section h2 {
+  max-width: 24ch;
+}
+
 .split-heading {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .split-heading p {
-  max-width: 440px;
+  max-width: 400px;
   color: var(--ink-muted);
-  font-size: 1.1rem;
+  font-size: 1.02rem;
 }
 
 /* Services */
@@ -550,12 +571,65 @@ p + p {
 }
 
 .ledger-group h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   margin: 0;
   padding: 0.95rem 1.35rem 0.8rem;
   font-size: 1.2rem;
   color: var(--sage-deep);
   border-bottom: 1px solid var(--line);
   background: rgba(255, 250, 246, 0.95);
+}
+
+.ledger-count {
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ledger-expand {
+  border-top: 1px solid var(--line);
+}
+
+.ledger-expand summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1.35rem;
+  color: var(--sage-deep);
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.ledger-expand summary::-webkit-details-marker {
+  display: none;
+}
+
+.ledger-expand summary::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 200ms ease;
+}
+
+.ledger-expand[open] summary::after {
+  transform: rotate(-135deg);
+}
+
+.ledger-lines-more {
+  border-top: 1px solid var(--line);
 }
 
 .ledger-lines {
@@ -818,7 +892,7 @@ p + p {
 .booking-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(360px, 1.2fr);
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: clamp(1.5rem, 3.5vw, 2.5rem);
   align-items: start;
 }
 
@@ -970,18 +1044,30 @@ p + p {
 
 .hours-list {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.4rem;
+  width: fit-content;
+  max-width: 100%;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .hours-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: minmax(2.6rem, 6.25rem) auto;
+  gap: 0.65rem;
+  align-items: baseline;
   border-bottom: 1px dotted rgba(80, 75, 66, 0.28);
   padding-bottom: 0.35rem;
+}
+
+.hours-card .hours-list li {
+  grid-template-columns: 6.25rem auto;
+}
+
+.site-footer .hours-list li {
+  grid-template-columns: 2.75rem auto;
+  gap: 0.5rem;
 }
 
 .hours-list li:last-child {
@@ -1240,12 +1326,11 @@ p + p {
 
 /* FAQ */
 .faq-section {
-  padding-block: clamp(56px, 8vw, 110px);
+  padding-block: clamp(32px, 4vw, 52px);
 }
 
 .faq-section h2 {
-  margin-bottom: 1.4rem;
-  max-width: 780px;
+  margin-bottom: 1rem;
 }
 
 .faq-list {
@@ -1503,10 +1588,22 @@ details p {
 
   .ledger-line {
     grid-template-columns: 1fr;
+    padding: 0.8rem 0;
+    gap: 0.45rem;
+  }
+
+  .ledger-line em {
+    font-size: 0.9rem;
   }
 
   .ledger-meta {
     justify-items: start;
+    text-align: left;
+  }
+
+  .ledger-expand summary {
+    padding: 0.8rem 1rem;
+    font-size: 0.88rem;
   }
 
   .review-layout {
@@ -1548,7 +1645,6 @@ details p {
   }
 
   .mini-services a,
-  .hours-list li,
   .quick-book-sticky dl div {
     display: grid;
   }
