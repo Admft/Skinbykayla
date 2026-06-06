@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookingForm from '../../components/BookingForm.astro';
+import ServiceMenu from '../../components/ServiceMenu.astro';
+import {
+  breadcrumbSchema,
+  business,
+  localBusinessSchema,
+  serviceCategories,
+  servicesByCategory,
+  websiteSchema
+} from '../../data/business';
+
+const schema = [
+  localBusinessSchema,
+  websiteSchema(),
+  breadcrumbSchema([
+    { name: 'Home', url: business.siteUrl },
+    { name: 'Services', url: `${business.siteUrl}/services/` }
+  ])
+];
+---
+<BaseLayout
+  title="Services | Waxing, Brows & Lash Lift in Royse City, TX | SkinByKaylaa"
+  description="Browse SkinByKaylaa services including brow tint, brow wax and tint, lash lift and tint, Brazilian waxing, bikini waxing, face waxing, arm waxing, and leg waxing in Royse City."
+  canonicalPath="/services/"
+  schema={schema}
+>
+  <section class="page-hero section-pad-small">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="location-stamp">Transparent pricing / calm care</div>
+        <h1>Services</h1>
+        <p>Choose the appointment that fits what you need today. Every service includes clear communication, skin prep, and aftercare guidance.</p>
+      </div>
+      <a class="button button-primary" href="/booking/">Book a service</a>
+    </div>
+  </section>
+
+  <section class="section-pad-small">
+    <div class="container">
+      <ServiceMenu />
+    </div>
+  </section>
+
+  <section class="service-detail-cloud section-pad-small" aria-label="Service categories">
+    <div class="container category-grid">
+      {serviceCategories.map((category) => (
+        <article>
+          <h2>{category}</h2>
+          <ul>
+            {servicesByCategory(category).map((service) => (
+              <li><a href={`/services/${service.slug}/`}>{service.name}</a></li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="booking-section section-pad" id="book">
+    <div class="container booking-grid">
+      <div class="booking-copy">
+        <h2>Ready to request a time?</h2>
+        <p>Send your preferred service, day, and time window. Kaylaa will confirm by text or email.</p>
+      </div>
+      <BookingForm />
+    </div>
+  </section>
+</BaseLayout>

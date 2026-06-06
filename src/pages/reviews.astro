@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingForm from '../components/BookingForm.astro';
+import ReviewMarquee from '../components/ReviewMarquee.astro';
+import { breadcrumbSchema, business, localBusinessSchema, reviews, websiteSchema } from '../data/business';
+
+const schema = [
+  localBusinessSchema,
+  websiteSchema(),
+  breadcrumbSchema([
+    { name: 'Home', url: business.siteUrl },
+    { name: 'Reviews', url: `${business.siteUrl}/reviews/` }
+  ])
+];
+---
+<BaseLayout
+  title="Client Reviews | SkinByKaylaa Esthetician in Royse City, TX"
+  description="Read Groupon and Google reviews for SkinByKaylaa, a Royse City esthetician studio for waxing, brows, lashes, facials, and self care."
+  canonicalPath="/reviews/"
+  schema={schema}
+>
+  <section class="page-hero section-pad-small">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="location-stamp">Comfort is the pattern</div>
+        <h1>Client reviews</h1>
+        <p>Real words from clients who mention feeling comfortable, heard, relaxed, and ready to come back.</p>
+      </div>
+      <a class="button button-primary" href={business.reviewLink} target="_blank" rel="noopener">Leave a Google review</a>
+    </div>
+  </section>
+
+  <ReviewMarquee />
+
+  <section class="reviews-wall section-pad-small" aria-label="All client reviews">
+    <div class="container masonry-reviews">
+      {reviews.map((review) => (
+        <article class="review-card static-review">
+          <p class="review-source">{review.source}{review.meta ? ` / ${review.meta}` : ''}</p>
+          <blockquote>{review.text}</blockquote>
+          <p class="review-name">{review.name}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="booking-section section-pad">
+    <div class="container booking-grid">
+      <div class="booking-copy">
+        <h2>Want that same calm experience?</h2>
+        <p>Request an appointment and share what would make the visit feel easier for you.</p>
+      </div>
+      <BookingForm />
+    </div>
+  </section>
+</BaseLayout>

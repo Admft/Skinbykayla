@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business, localBusinessSchema } from '../data/business';
+---
+<BaseLayout
+  title="Page Not Found | SkinByKaylaa"
+  description="This SkinByKaylaa page could not be found. Return to services or request an appointment."
+  canonicalPath="/404/"
+  schema={localBusinessSchema}
+  noindex={true}
+>
+  <section class="page-hero section-pad">
+    <div class="container narrow thank-you-card">
+      <div class="location-stamp">A soft reset</div>
+      <h1>That page drifted away.</h1>
+      <p>Use the service menu or booking page to get back to SkinByKaylaa.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/services/">View services</a>
+        <a class="button button-secondary" href={`tel:${business.phoneE164}`}>Call {business.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

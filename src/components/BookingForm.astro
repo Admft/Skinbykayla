@@ -1,0 +1,70 @@
+---
+import { business, formatDuration, formatMoney, services } from '../data/business';
+---
+<form class="booking-form" name="booking-request" method="POST" data-netlify="true" netlify-honeypot="company" action="/thanks/">
+  <input type="hidden" name="form-name" value="booking-request" />
+  <p class="hidden-field">
+    <label>Company <input name="company" /></label>
+  </p>
+
+  <div class="form-grid">
+    <label>
+      <span>Name</span>
+      <input name="name" autocomplete="name" required />
+    </label>
+
+    <label>
+      <span>Mobile number</span>
+      <input name="phone" autocomplete="tel" inputmode="tel" required />
+    </label>
+
+    <label>
+      <span>Email</span>
+      <input type="email" name="email" autocomplete="email" />
+    </label>
+
+    <label>
+      <span>Service</span>
+      <select name="service" required data-service-select>
+        <option value="">Choose a service</option>
+        {services.map((service) => (
+          <option value={`${service.name} - ${formatMoney(service.price)} - ${formatDuration(service.durationMinutes)}`}>
+            {service.name} - {formatMoney(service.price)} - {formatDuration(service.durationMinutes)}
+          </option>
+        ))}
+      </select>
+    </label>
+
+    <label>
+      <span>Preferred day</span>
+      <input type="date" name="preferred_day" />
+    </label>
+
+    <label>
+      <span>Preferred time window</span>
+      <select name="preferred_time">
+        <option>Morning</option>
+        <option>Afternoon</option>
+        <option>Evening</option>
+        <option>First available</option>
+      </select>
+    </label>
+  </div>
+
+  <label>
+    <span>Anything Kaylaa should know?</span>
+    <textarea name="message" rows="5" placeholder="First wax, sensitive skin, event date, brow goals, questions, etc."></textarea>
+  </label>
+
+  <div class="booking-consent">
+    <label class="checkbox-row">
+      <input type="checkbox" name="text_ok" value="yes" checked />
+      <span>It is okay for SkinByKaylaa to text me about this request.</span>
+    </label>
+  </div>
+
+  <button class="button button-primary" type="submit">Send booking request</button>
+  <p class="form-note">
+    This sends a request, not an automatic confirmation. Need help faster? Text <a href={`sms:${business.phoneE164}`}>{business.phoneDisplay}</a>.
+  </p>
+</form>

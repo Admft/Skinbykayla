@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business, localBusinessSchema } from '../data/business';
+---
+<BaseLayout
+  title="Booking Request Sent | SkinByKaylaa"
+  description="Your SkinByKaylaa booking request has been sent. Kaylaa will confirm your appointment by text or email."
+  canonicalPath="/thanks/"
+  schema={localBusinessSchema}
+  noindex={true}
+>
+  <section class="page-hero section-pad">
+    <div class="container narrow thank-you-card">
+      <div class="location-stamp">Request sent</div>
+      <h1>Thank you.</h1>
+      <p>Your appointment request has been sent. Kaylaa will confirm the service, day, and time by text or email.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/services/">Back to services</a>
+        <a class="button button-secondary" href={`sms:${business.phoneE164}`}>Text {business.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

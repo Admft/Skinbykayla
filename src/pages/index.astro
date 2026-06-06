@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingForm from '../components/BookingForm.astro';
+import FAQ from '../components/FAQ.astro';
+import ReviewMarquee from '../components/ReviewMarquee.astro';
+import ServiceMenu from '../components/ServiceMenu.astro';
+import {
+  breadcrumbSchema,
+  business,
+  faqSchema,
+  formatDuration,
+  formatMoney,
+  localBusinessSchema,
+  services,
+  websiteSchema
+} from '../data/business';
+
+const pageTitle = 'SkinByKaylaa | Esthetician, Waxing, Brows & Lash Lift in Royse City, TX';
+const pageDescription =
+  'SkinByKaylaa is a calm Royse City esthetician studio for waxing, brow tinting, brow waxing, lash lifts, and self care at 305 E Main St.';
+const schema = [
+  localBusinessSchema,
+  websiteSchema(),
+  faqSchema(),
+  breadcrumbSchema([{ name: 'Home', url: business.siteUrl }])
+];
+---
+<BaseLayout title={pageTitle} description={pageDescription} schema={schema}>
+  <section class="hero section-pad">
+    <div class="hero-art" aria-hidden="true">
+      <span class="ribbon ribbon-one"></span>
+      <span class="ribbon ribbon-two"></span>
+    </div>
+
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="location-stamp">Royse City, Texas / by appointment</div>
+        <h1>Skin, brows, and self care in a room that lets you exhale.</h1>
+        <p>
+          A private esthetician studio for gentle waxing, defined brows, natural lash lifts, and skin care support that feels calm from the first text to the last bit of aftercare.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#book">Book now</a>
+          <a class="button button-secondary" href="/services/">See services</a>
+        </div>
+        <p class="hero-trust">
+          Clients describe Kaylaa as sweet, thorough, professional, personable, and easy to talk to.
+        </p>
+      </div>
+
+      <aside class="hero-card" aria-label="Popular appointment options">
+        <div class="hero-card-header">
+          <span>Today on the menu</span>
+          <strong>SkinByKaylaa</strong>
+        </div>
+        <div class="mini-services">
+          {services.slice(0, 6).map((service) => (
+            <a href={`/services/${service.slug}/`}>
+              <span>{service.name}</span>
+              <span>{formatMoney(service.price)} / {formatDuration(service.durationMinutes)}</span>
+            </a>
+          ))}
+        </div>
+        <a class="text-link" href="/services/">View the full service menu</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="intro-panel section-pad-small">
+    <div class="container intro-grid">
+      <div>
+        <h2>A calm little pause on Main Street.</h2>
+      </div>
+      <div class="intro-copy">
+        <p>
+          SkinByKaylaa is built for clients who want results without feeling rushed, judged, or confused. The studio tone is soft and clean: a little clinical, a little cozy, and fully focused on making the appointment feel safe.
+        </p>
+        <p>
+          Come in for a quick brow wax, a first Brazilian wax, a lash lift before a trip, or a routine body wax. You will know what is happening, what to expect, and how to care for your skin after you leave.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="signature-services section-pad" aria-labelledby="signature-services-title">
+    <div class="container split-heading">
+      <h2 id="signature-services-title">Service menu</h2>
+      <p>Brows, lashes, and waxing with transparent pricing and appointment lengths before you book.</p>
+    </div>
+    <div class="container">
+      <ServiceMenu />
+    </div>
+  </section>
+
+  <section class="care-notes section-pad-small" aria-labelledby="care-notes-title">
+    <div class="container care-grid">
+      <article>
+        <span class="note-number">01</span>
+        <h3>Private, respectful appointments</h3>
+        <p>Especially for waxing services, comfort matters. The appointment is paced with communication, privacy, and room to ask questions.</p>
+      </article>
+      <article>
+        <span class="note-number">02</span>
+        <h3>Gentle skin-first prep</h3>
+        <p>Skin is cleansed before waxing and soothed after. Wax choice and technique are adjusted to the area and your skin needs.</p>
+      </article>
+      <article>
+        <span class="note-number">03</span>
+        <h3>Brows that still look like you</h3>
+        <p>Brow waxing, shaping, and tinting are built around your natural features, not a copy-and-paste brow trend.</p>
+      </article>
+    </div>
+  </section>
+
+  <ReviewMarquee />
+
+  <section class="booking-section section-pad" id="book" aria-labelledby="book-title">
+    <div class="container booking-grid">
+      <div class="booking-copy">
+        <h2 id="book-title">Book your appointment request.</h2>
+        <p>
+          Pick a service, share a preferred day and time, and Kaylaa will confirm the appointment. This replaces the old Square booking flow with a cleaner first-party website experience.
+        </p>
+        <div class="contact-card">
+          <p>Prefer a quick text?</p>
+          <a href={`sms:${business.phoneE164}`}>Text {business.phoneDisplay}</a>
+        </div>
+      </div>
+      <BookingForm />
+    </div>
+  </section>
+
+  <section class="visit-section section-pad-small" aria-labelledby="visit-title">
+    <div class="container visit-grid">
+      <div>
+        <h2 id="visit-title">Find SkinByKaylaa in Royse City.</h2>
+        <p>
+          {business.address.street}, {business.address.city}, {business.address.region} {business.address.postalCode}
+        </p>
+        <a class="button button-secondary" href={business.mapsLink} target="_blank" rel="noopener">Get directions</a>
+      </div>
+      <div class="hours-card">
+        <h3>Hours</h3>
+        <ul class="hours-list">
+          {business.hours.map((hour) => (
+            <li><span>{hour.day}</span><span>9:00am - 6:00pm</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <FAQ />
+</BaseLayout>

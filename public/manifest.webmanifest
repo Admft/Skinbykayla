@@ -1,0 +1,16 @@
+{
+  "name": "SkinByKaylaa",
+  "short_name": "SkinByKaylaa",
+  "description": "Royse City esthetician studio for waxing, brows, lash lifts, and self care.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ebe8e3",
+  "theme_color": "#ebe8e3",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

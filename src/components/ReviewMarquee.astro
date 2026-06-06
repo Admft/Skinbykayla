@@ -1,0 +1,21 @@
+---
+import { reviews } from '../data/business';
+const marqueeReviews = [...reviews, ...reviews];
+---
+<section class="review-marquee-section" aria-labelledby="review-marquee-title">
+  <div class="container review-heading-row">
+    <h2 id="review-marquee-title">Words clients keep repeating: comfortable, kind, gentle, thorough.</h2>
+    <a href="/reviews/">Read all reviews</a>
+  </div>
+  <div class="review-marquee" data-marquee aria-label="Client review carousel">
+    <div class="review-track">
+      {marqueeReviews.map((review) => (
+        <article class="review-card">
+          <p class="review-source">{review.source}</p>
+          <blockquote>{review.text}</blockquote>
+          <p class="review-name">{review.name}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

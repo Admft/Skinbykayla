@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingForm from '../components/BookingForm.astro';
+import ServiceMenu from '../components/ServiceMenu.astro';
+import { breadcrumbSchema, business, localBusinessSchema, websiteSchema } from '../data/business';
+
+const schema = [
+  localBusinessSchema,
+  websiteSchema(),
+  breadcrumbSchema([
+    { name: 'Home', url: business.siteUrl },
+    { name: 'Booking', url: `${business.siteUrl}/booking/` }
+  ])
+];
+---
+<BaseLayout
+  title="Book SkinByKaylaa | Royse City Esthetician Appointment Request"
+  description="Request an appointment with SkinByKaylaa for waxing, brows, lash lift and tint, and self care services in Royse City, TX."
+  canonicalPath="/booking/"
+  schema={schema}
+>
+  <section class="page-hero section-pad-small">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="location-stamp">Request an appointment</div>
+        <h1>Book SkinByKaylaa</h1>
+        <p>Choose your service, preferred day, and time window. Kaylaa will confirm by text or email.</p>
+      </div>
+      <a class="button button-secondary" href={`sms:${business.phoneE164}`}>Text instead</a>
+    </div>
+  </section>
+
+  <section class="booking-section section-pad-small">
+    <div class="container booking-grid">
+      <div class="booking-copy">
+        <h2>The calmer booking flow.</h2>
+        <p>This form keeps the experience on the SkinByKaylaa website while still giving Kaylaa control of confirmed appointment times.</p>
+        <div class="contact-card">
+          <p>Studio address</p>
+          <a href={business.mapsLink} target="_blank" rel="noopener">{business.address.street}, {business.address.city}, {business.address.region}</a>
+        </div>
+      </div>
+      <BookingForm />
+    </div>
+  </section>
+
+  <section class="section-pad-small">
+    <div class="container split-heading">
+      <h2>Service menu</h2>
+      <p>Use this list to compare price and time before sending the request.</p>
+    </div>
+    <div class="container">
+      <ServiceMenu compact />
+    </div>
+  </section>
+</BaseLayout>

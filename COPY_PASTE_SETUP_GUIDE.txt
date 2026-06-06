@@ -1,0 +1,243 @@
+SKINBYKAYLAA COPY-PASTE SETUP GUIDE
+====================================
+
+This guide assumes you are on Windows, you made an empty GitHub repo, and you have an empty local project folder.
+
+------------------------------------------------------------
+PART 1 - INSTALL THE TOOLS
+------------------------------------------------------------
+
+Open PowerShell as normal user, not admin. Paste this:
+
+winget install --id Git.Git -e
+winget install --id OpenJS.NodeJS.LTS -e
+
+Close PowerShell. Open a new PowerShell window so Windows picks up Node and Git.
+
+Check the installs:
+
+node -v
+npm -v
+git --version
+
+If those commands show version numbers, continue.
+
+------------------------------------------------------------
+PART 2 - PUT THE WEBSITE FILES IN YOUR EMPTY PROJECT FOLDER
+------------------------------------------------------------
+
+1. Download and unzip the project zip from ChatGPT.
+2. Open the unzipped folder named skinbykaylaa-website.
+3. Copy everything inside it.
+4. Paste everything into your empty project folder.
+
+Your folder should now contain files like:
+
+package.json
+astro.config.mjs
+netlify.toml
+src
+public
+README.md
+
+------------------------------------------------------------
+PART 3 - RUN THE WEBSITE LOCALLY
+------------------------------------------------------------
+
+In PowerShell, go to your project folder. Example:
+
+cd "C:\Users\YOURNAME\Desktop\skinbykaylaa"
+
+Install the project:
+
+npm install
+
+Start the dev server:
+
+npm run dev
+
+Astro will print a local URL, usually:
+
+http://localhost:4321
+
+Open it in your browser.
+
+Stop the server anytime with:
+
+Ctrl + C
+
+------------------------------------------------------------
+PART 4 - EDIT CLIENT INFO
+------------------------------------------------------------
+
+Open the project in VS Code:
+
+code .
+
+Main file for business info:
+
+src/data/business.ts
+
+Check these fields:
+
+- phoneDisplay
+- phoneE164
+- email
+- reviewLink
+- address
+- hours
+- services
+- reviews
+
+If Kaylaa wants to add official facials, add them to the services array and also add matching sitemap and llms.txt entries.
+
+------------------------------------------------------------
+PART 5 - COMMIT AND PUSH TO GITHUB
+------------------------------------------------------------
+
+In your project folder, paste:
+
+git init
+git add .
+git commit -m "Build SkinByKaylaa website"
+git branch -M main
+
+Now connect your empty GitHub repo. Replace the URL below with your actual repo URL:
+
+git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
+git push -u origin main
+
+If GitHub asks you to sign in, sign in through the browser prompt.
+
+------------------------------------------------------------
+PART 6 - DEPLOY ON NETLIFY
+------------------------------------------------------------
+
+Recommended because the booking request form is already built for Netlify Forms.
+
+1. Go to Netlify.
+2. Add new site.
+3. Import from Git.
+4. Pick your GitHub repo.
+5. Build command should be:
+
+npm run build
+
+6. Publish directory should be:
+
+dist
+
+7. Deploy.
+
+After deploy, open the Netlify URL and test the site.
+
+------------------------------------------------------------
+PART 7 - TURN ON BOOKING FORM EMAILS
+------------------------------------------------------------
+
+1. Go to the live Netlify URL.
+2. Submit one fake/test booking request.
+3. In Netlify dashboard, open the site.
+4. Go to Forms.
+5. Open booking-request.
+6. Go to Notifications.
+7. Add an email notification to Kaylaa's email.
+
+Recommended email subject:
+
+New SkinByKaylaa booking request
+
+Test again after notification is added.
+
+------------------------------------------------------------
+PART 8 - CONNECT THE DOMAIN FROM SQUARE
+------------------------------------------------------------
+
+Do this after the Netlify URL is working.
+
+1. In Netlify, go to Site configuration -> Domain management.
+2. Add custom domain:
+
+skinbykaylaa.com
+
+3. Add domain alias:
+
+www.skinbykaylaa.com
+
+4. Netlify will show DNS records to add.
+5. Log into wherever the domain DNS is managed. If Square is only the registrar/domain account, keep the domain there but update DNS records to the exact values Netlify shows.
+6. Wait for DNS and SSL to finish. This can take minutes or several hours.
+
+Do not guess DNS records. Use the exact records Netlify gives you.
+
+------------------------------------------------------------
+PART 9 - UPDATE GOOGLE BUSINESS PROFILE
+------------------------------------------------------------
+
+Once the site is live:
+
+Website URL:
+
+https://www.skinbykaylaa.com/
+
+Appointment URL:
+
+https://www.skinbykaylaa.com/booking/
+
+Also add every service in Google Business Profile with the same names and prices as the website.
+
+Ask happy clients to leave Google reviews using the site button.
+
+------------------------------------------------------------
+PART 10 - SEARCH CONSOLE
+------------------------------------------------------------
+
+1. Open Google Search Console.
+2. Add property for:
+
+https://www.skinbykaylaa.com/
+
+3. Verify the property.
+4. Submit sitemap:
+
+https://www.skinbykaylaa.com/sitemap.xml
+
+5. Inspect the homepage URL and request indexing.
+6. Inspect the /services/ URL and request indexing.
+7. Inspect /booking/ and request indexing.
+
+------------------------------------------------------------
+PART 11 - AFTER LAUNCH TESTS
+------------------------------------------------------------
+
+Open these URLs after launch:
+
+https://www.skinbykaylaa.com/
+https://www.skinbykaylaa.com/services/
+https://www.skinbykaylaa.com/booking/
+https://www.skinbykaylaa.com/reviews/
+https://www.skinbykaylaa.com/llms.txt
+https://www.skinbykaylaa.com/sitemap.xml
+
+Run tests:
+
+- Google PageSpeed Insights
+- Google Rich Results Test
+- Google Search Console URL Inspection
+- Mobile phone test
+- Booking form test
+- Call button test
+- Text button test
+- Google review button test
+
+------------------------------------------------------------
+PART 12 - NORMAL UPDATE WORKFLOW
+------------------------------------------------------------
+
+Anytime you make changes:
+
+git add .
+git commit -m "Update website"
+git push
+
+Netlify will automatically redeploy.

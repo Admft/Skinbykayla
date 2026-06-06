@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookingForm from '../../components/BookingForm.astro';
+import ServiceMenu from '../../components/ServiceMenu.astro';
+import {
+  breadcrumbSchema,
+  business,
+  formatDuration,
+  formatMoney,
+  localBusinessSchema,
+  serviceSchema,
+  services,
+  type Service
+} from '../../data/business';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+}
+
+const { service } = Astro.props as { service: Service };
+const related = services.filter((item) => item.category === service.category && item.slug !== service.slug).slice(0, 4);
+const title = `${service.name} in Royse City, TX | SkinByKaylaa`;
+const description = `${service.summary} Book ${service.name.toLowerCase()} with SkinByKaylaa at 305 E Main St in Royse City, TX.`;
+const schema = [
+  localBusinessSchema,
+  serviceSchema(service),
+  breadcrumbSchema([
+    { name: 'Home', url: business.siteUrl },
+    { name: 'Services', url: `${business.siteUrl}/services/` },
+    { name: service.name, url: `${business.siteUrl}/services/${service.slug}/` }
+  ])
+];
+---
+<BaseLayout title={title} description={description} canonicalPath={`/services/${service.slug}/`} schema={schema}>
+  <section class="service-hero section-pad-small">
+    <div class="container service-hero-grid">
+      <div>
+        <a class="crumb-link" href="/services/">Back to services</a>
+        <h1>{service.name} in Royse City, TX</h1>
+        <p>{service.summary}</p>
+        <div class="service-facts" aria-label="Service details">
+          <span>{formatMoney(service.price)}</span>
+          <span>{formatDuration(service.durationMinutes)}</span>
+          <span>{service.category}</span>
+        </div>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#book">Book {service.name}</a>
+          <a class="button button-secondary" href={`sms:${business.phoneE164}`}>Text a question</a>
+        </div>
+      </div>
+      <aside class="service-note-card">
+        <p>Good for searches like:</p>
+        <ul>
+          {service.searchPhrases.map((phrase) => <li>{phrase}</li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="service-body section-pad-small">
+    <div class="container service-body-grid">
+      <article class="prose-card">
+        <h2>What to expect</h2>
+        <p>{service.details}</p>
+        <p>
+          The appointment is designed to feel calm and clear. You can ask questions before the service starts, share sensitivities or preferences, and leave with simple aftercare notes.
+        </p>
+      </article>
+      <aside class="quick-book-sticky">
+        <h2>Quick details</h2>
+        <dl>
+          <div><dt>Price</dt><dd>{formatMoney(service.price)}</dd></div>
+          <div><dt>Time</dt><dd>{formatDuration(service.durationMinutes)}</dd></div>
+          <div><dt>Location</dt><dd>{business.address.street}, {business.address.city}</dd></div>
+        </dl>
+        <a class="button button-primary" href="#book">Request this service</a>
+      </aside>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section-pad-small" aria-labelledby="related-title">
+      <div class="container split-heading">
+        <h2 id="related-title">Related {service.category.toLowerCase()} services</h2>
+        <p>Clients often compare these before booking.</p>
+      </div>
+      <div class="container related-row">
+        {related.map((item) => (
+          <a class="related-pill" href={`/services/${item.slug}/`}>
+            <strong>{item.name}</strong>
+            <span>{formatMoney(item.price)} / {formatDuration(item.durationMinutes)}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="booking-section section-pad" id="book">
+    <div class="container booking-grid">
+      <div class="booking-copy">
+        <h2>Request {service.name}.</h2>
+        <p>Send your preferred day and time window. Kaylaa will confirm your appointment by text or email.</p>
+      </div>
+      <BookingForm />
+    </div>
+  </section>
+
+  <section class="section-pad-small">
+    <div class="container split-heading">
+      <h2>Full service menu</h2>
+      <p>Need something else? Browse the complete SkinByKaylaa menu.</p>
+    </div>
+    <div class="container">
+      <ServiceMenu compact />
+    </div>
+  </section>
+</BaseLayout>

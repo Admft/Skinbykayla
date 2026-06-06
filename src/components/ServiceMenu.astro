@@ -1,0 +1,29 @@
+---
+import { formatDuration, formatMoney, serviceCategories, servicesByCategory } from '../data/business';
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+<div class={compact ? 'service-ledger service-ledger-compact' : 'service-ledger'}>
+  {serviceCategories.map((category) => (
+    <section class="ledger-group" aria-labelledby={`group-${category.toLowerCase()}`}>
+      <h3 id={`group-${category.toLowerCase()}`}>{category}</h3>
+      <div class="ledger-lines">
+        {servicesByCategory(category).map((service) => (
+          <a class="ledger-line" href={`/services/${service.slug}/`}>
+            <span>
+              <strong>{service.name}</strong>
+              {!compact && <em>{service.summary}</em>}
+            </span>
+            <span class="ledger-meta">
+              <b>{formatMoney(service.price)}</b>
+              <small>{formatDuration(service.durationMinutes)}</small>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+</div>

@@ -1,0 +1,33 @@
+---
+import { business } from '../data/business';
+const nav = [
+  { href: '/services/', label: 'Services' },
+  { href: '/reviews/', label: 'Reviews' },
+  { href: '/booking/', label: 'Book' },
+  { href: '#visit', label: 'Visit' }
+];
+---
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="SkinByKaylaa home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 60 60" role="img">
+          <path d="M8 42c12-2 12-22 24-24 10-1 12 10 22 5" />
+          <path d="M7 28c10-6 16-16 28-16 8 0 13 4 18 7" />
+          <path d="M11 47c15 6 28-4 42 1" />
+        </svg>
+      </span>
+      <span class="brand-text">SkinByKaylaa</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-nav-toggle>
+      <span class="sr-only">Open menu</span>
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" id="site-navigation" data-nav>
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a class="nav-phone" href={`tel:${business.phoneE164}`}>{business.phoneDisplay}</a>
+    </nav>
+  </div>
+</header>
