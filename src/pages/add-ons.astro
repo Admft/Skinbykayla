@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { addOnPageIntro, addOns } from '../data/addons';
+import { breadcrumbSchema, business, formatDuration, formatMoney, localBusinessSchema, websiteSchema } from '../data/business';
+
+const groups = [
+  {
+    title: 'Skin & facial add-ons',
+    slugs: ['mini-glow-facial', 'cooling-jelly-mask', 'gentle-exfoliation', 'ingrown-hair-care', 'calming-post-wax', 'underarm-brightening']
+  },
+  {
+    title: 'Brow add-ons',
+    slugs: ['brow-tint-addon', 'brow-mapping', 'brow-conditioning']
+  },
+  {
+    title: 'Lash add-ons',
+    slugs: ['lash-conditioning']
+  },
+  {
+    title: 'Waxing add-ons',
+    slugs: ['happy-trail', 'inner-thigh', 'hand-foot-wax', 'neck-cleanup', 'lip-wax-addon', 'chin-wax-addon']
+  }
+];
+
+const schema = [
+  localBusinessSchema,
+  websiteSchema(),
+  breadcrumbSchema([
+    { name: 'Home', url: business.siteUrl },
+    { name: 'Add-ons', url: `${business.siteUrl}/add-ons/` }
+  ])
+];
+---
+<BaseLayout
+  title="Optional Add-Ons | SkinByKaylaa Royse City Esthetician"
+  description="Browse optional SkinByKaylaa add-ons like calming post-wax care, cooling jelly masks, brow tinting, and mini glow facials for a more personalized appointment."
+  canonicalPath="/add-ons/"
+  schema={schema}
+>
+  <section class="page-hero section-pad-small">
+    <div class="container page-hero-grid">
+      <div>
+        <div class="location-stamp">Optional / comfort-focused</div>
+        <h1>Add a little extra care</h1>
+        <p>{addOnPageIntro}</p>
+      </div>
+      <a class="button button-primary" href="/booking/">Start booking</a>
+    </div>
+  </section>
+
+  <section class="section-pad-small">
+    <div class="container">
+      {groups.map((group) => (
+        <div class="addon-menu-group">
+          <h2>{group.title}</h2>
+          <div class="addon-menu-grid">
+            {group.slugs.map((slug) => {
+              const addOn = addOns.find((item) => item.slug === slug);
+              if (!addOn) return null;
+              return (
+                <article class="addon-menu-card">
+                  <h3>{addOn.name}</h3>
+                  <span class="addon-menu-meta">{formatMoney(addOn.price)} · {formatDuration(addOn.durationMinutes)}</span>
+                  <p>{addOn.summary}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-pad-small">
+    <div class="container narrow">
+      <p>
+        During booking, only add-ons that pair well with your selected service will appear. They are completely optional — simply choose what helps your visit feel more comfortable, polished, and tailored to your skin.
+      </p>
+      <a class="button button-primary" href="/booking/">Book with optional add-ons</a>
+    </div>
+  </section>
+</BaseLayout>

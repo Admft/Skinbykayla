@@ -1010,6 +1010,173 @@ p + p {
   font-weight: 900;
 }
 
+.booking-step-service {
+  margin-bottom: 0.25rem;
+}
+
+.addon-step {
+  margin-top: 1rem;
+  padding: 1.1rem 1.15rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 250, 246, 0.9);
+  box-shadow: var(--shadow-soft);
+}
+
+.addon-step-copy h3 {
+  margin-bottom: 0.45rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sage-deep);
+}
+
+.addon-step-copy p {
+  color: var(--ink-muted);
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+
+.addon-step-copy p + p {
+  margin-top: 0.65rem;
+}
+
+.addon-step-title {
+  color: var(--ink) !important;
+  font-weight: 800;
+}
+
+.addon-step-hint {
+  font-size: 0.92rem !important;
+  font-style: italic;
+}
+
+.addon-options {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.addon-option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fffefc;
+  cursor: pointer;
+}
+
+.addon-option:has(input:checked) {
+  border-color: rgba(94, 114, 84, 0.45);
+  background: rgba(125, 147, 111, 0.08);
+}
+
+.addon-option input {
+  width: 18px;
+  height: 18px;
+  margin-top: 0.15rem;
+  accent-color: var(--sage);
+}
+
+.addon-option-copy {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.addon-option-copy strong {
+  font-size: 0.98rem;
+}
+
+.addon-option-meta {
+  color: var(--sage-deep);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.addon-option-summary {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.addon-step-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.booking-details {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.booking-details[hidden],
+.addon-step[hidden] {
+  display: none !important;
+}
+
+.addon-menu-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.addon-menu-card {
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 250, 246, 0.78);
+  box-shadow: var(--shadow-soft);
+}
+
+.addon-menu-card h3 {
+  margin-bottom: 0.35rem;
+  font-size: 1.15rem;
+}
+
+.addon-menu-card p {
+  color: var(--ink-muted);
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+
+.addon-menu-meta {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  color: var(--sage-deep);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.addon-menu-group + .addon-menu-group {
+  margin-top: 2rem;
+}
+
+.addon-menu-group h2 {
+  margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  max-width: none;
+}
+
+.make-it-yours p {
+  color: var(--ink-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.make-it-yours .text-link {
+  display: inline-block;
+  margin-top: 0.85rem;
+}
+
 /* Visit */
 .visit-section {
   background: linear-gradient(100deg, rgba(234, 211, 223, 0.28), rgba(255, 250, 246, 0.48));
@@ -1636,7 +1803,8 @@ details p {
   }
 
   .hero-actions,
-  .footer-actions {
+  .footer-actions,
+  .addon-step-actions {
     align-items: stretch;
   }
 
