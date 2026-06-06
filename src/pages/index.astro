@@ -49,12 +49,9 @@ const schema = [
       </div>
 
       <aside class="hero-card" aria-label="Popular appointment options">
-        <div class="hero-card-header">
-          <span>Today on the menu</span>
-          <strong>SkinByKaylaa</strong>
-        </div>
+        <p class="hero-card-label">Today on the menu</p>
         <div class="mini-services">
-          {services.slice(0, 6).map((service) => (
+          {services.slice(0, 5).map((service) => (
             <a href={`/services/${service.slug}/`}>
               <span>{service.name}</span>
               <span>{formatMoney(service.price)} / {formatDuration(service.durationMinutes)}</span>
